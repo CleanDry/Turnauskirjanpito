@@ -1,12 +1,29 @@
 {% extends "layout.html" %}
+
 {% block title %}Login{% endblock %}
+
 {% block content %}
-<title>Etusivu</title>
-<h1>Etusivu</h1>
-<p>{{ message }}</p>
-<ul>
-{% for item in items %}
-<li> {{ item }}
-{% endfor %}
-</ul>
+<h3>Welcome to Miniature Match Membancer!</h3>
+<p>In this App, you can keep track of your matches with and armies of miniatures.</p>
+{% if session.username %}
+    <p>Logged in as {{ session.username }}</p>
+    <p> Go to 
+        <a href="/app">App</a>
+        or
+        <a href="/logout">Log out</a>
+    </p>
+{% else %}
+    <form action="/" method="POST">
+        <p>Username:<br>
+        <input type="username" name="username"></p>
+        <p>Password:<br>
+        <input type="password" name="password"></p>
+        <input type="submit" value="Log in">
+    </form>
+    <form action="/register">
+        <input type="submit" value="Create a new User">
+    </form>
+    <br>
+    {{ message }}
+{% endif %}
 {% endblock %}

@@ -1,6 +1,10 @@
 <!doctype html>
 <title>Miniature Match Membrancer - {% block title %}{% endblock %}</title>
 <h1>Miniature Match Membrancer</h1>
+{% if session.username %}
+    <p>Logged in as {{ session.username }}</p>
+    <a href="/logout">Kirjaudu ulos</a>
+{% endif %}
 <hr>
 {% block content %}{% endblock %}
 <hr>

@@ -1,0 +1,20 @@
+{% extends "layout.html" %}
+
+{% block title %}Register{% endblock %}
+
+{% block login %}
+{% if session.username %}
+    <p>Logged in as {{ session.username }}</p>
+    <a href="/logout">Kirjaudu ulos</a>
+{% else %}
+    <form action="/register" method="POST">
+        <p>Username:<br>
+        <input type="username" name="username"></p>
+        <p>Password:<br>
+        <input type="password" name="password"></p>
+        <input type="submit" value="Register">
+    </form>
+    <br>
+    {{ message }}
+{% endif %}
+{% endblock %}
