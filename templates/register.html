@@ -2,7 +2,7 @@
 
 {% block title %}Register{% endblock %}
 
-{% block login %}
+{% block content %}
 {% if session.username %}
     <p>Logged in as {{ session.username }}</p>
     <a href="/logout">Kirjaudu ulos</a>
@@ -14,6 +14,7 @@
         <input type="password" name="password"></p>
         <input type="submit" value="Register">
     </form>
+    <p>or go back to <a href="/">login</a></p>
     <br>
     {{ message }}
 {% endif %}

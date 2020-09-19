@@ -1,6 +1,6 @@
 from app import app
 from flask import render_template, request, redirect
-import users
+import users, user_matches
 
 @app.route("/", methods=["GET", "POST"])
 def index():
@@ -10,7 +10,7 @@ def index():
         username = request.form["username"]
         password = request.form["password"]
         if users.login(username, password):
-            return redirect("/app")
+            return redirect("/matches")
         else:
             return render_template("index.html", message="Incorrect username or password!")
 
@@ -27,18 +27,14 @@ def register():
         username = request.form["username"]
         password = request.form["password"]
         if users.register(username,password):
-            return redirect("/app")
+            return redirect("/matches")
         else:
             return render_template("register.html", message="Incorrect username or password!")
 
-@app.route("/form")
-def form():
-    return render_template("form.html")
-
-@app.route("/result", methods=["POST"])
-def result():
-    return render_template("result.html", name=request.form["name"])
-
-@app.route("/page/<int:id>")
-def page(id):
-    return "Tämä on sivu "+str(id)
+@app.route("/matches", methods=["GET", "POST"])
+def matches():
+    if request.method == "GET":
+        returned_matches = user_matches.get_matches()
+        return render_template("matches.html", matches=returned_matches)
+    if request.method == "POST":
+        return render_template("index.html")

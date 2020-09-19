@@ -16,6 +16,9 @@ Shut down server with ctrl-c
 Connecting to PQSL-server with interactive terminal:
 ``pqsl``
 
+Activating virtual environment
+``source venv/bin/activate``
+
 Installing required dependencies to virtual environment:
 ``(venv) $ pip install -r requirements.txt``
 
