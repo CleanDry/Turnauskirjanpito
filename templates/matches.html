@@ -6,10 +6,13 @@
 {% if session.username %}
     <ul>
         {% for match in matches %}
-        <li> {{ match }}
+        <li> <a href="/match/{{ match.matchid }}">{{ match.matchname }}</a> , {{ match.matchsize }} pts
         {% endfor %}
     </ul>
-    <form action="/matches">
+    <hr>
+    <form action="/matches" method="POST">
+        Match name: <input type="text" name="match_name">
+        Match size (in points): <input type="number" name="match_size">
         <input type="submit" value="Create a new Match">
     </form>
     <br>

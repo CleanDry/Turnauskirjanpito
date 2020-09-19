@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+
+{% block title %}Match {{ match.matchid }}{% endblock %}
+
+{% block content %}
+{% if session.username %}
+    <h2>{{ match.matchname }}</h2>
+    <h3>{{ match.matchsize }}</h3>
+    Force 1
+    <ul>
+        {% for army in force1 %}
+        <li> <a href="/match/+{{ army.armyid }}">{{ army.armyname }}</a>, {{ army.armysize }} pts
+        {% endfor %}
+    </ul>
+    <p>vs</p>
+    Force 2
+    <ul>
+        {% for army in force2 %}
+        <li> <a href="/match/+{{ army.armyid }}">{{ army.armyname }}</a>, {{ army.armysize }} pts
+        {% endfor %}
+    </ul>
+    <hr>
+    <form action="/armies" method="POST">
+        Army name: <input type="text" name="army_name">
+        Army size (in points): <input type="number" name="army_size">
+        <p>
+            <input type="radio" name="force" value="1"> Force 1
+            <input type="radio" name="force" value="2"> Force 2
+        </p>
+        <input type="submit" value="Create a new Army">
+        <input type="hidden" name="match_id" value="{{ match.matchid }}">
+    </form>
+    <br>
+    {{ message }}
+    Back to <a href="/matches">Matches</a>
+{% else %}
+    <p>Please, <a href="/">log in</a></p>
+{% endif %}
+{% endblock %}
