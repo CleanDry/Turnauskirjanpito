@@ -9,6 +9,30 @@ Sovelluksen velmistuttua sillä voi:
 - Lisätä, poistaa ja muokata otteluita
 - Nähdä yhteenvedon otteluista
 
+Sovellus on testattavissa osoitteessa:
+https://tsoha-membrancer.herokuapp.com/
+
+Tällä hetkellä sovelluksessa voi:
+- Luoda uuden käyttäjän ja kirjautua olemassaolevan käyttäjän tiedoilla sovellukseen
+- Nähdä yhteenvedon otteluista
+- Lisätä otteluita
+- Lisätä armeijoita
+
+Tällä hetkellä sovelluksen backend tukee jo:
+- Luoda uuden käyttäjän ja kirjautua olemassaolevan käyttäjän tiedoilla sovellukseen
+- Lisätä ja poistaa yksiköitä
+- Lisätä ja poistaa armeijoita
+- Liittää ja irroittaa yksiköitä armeijoihin
+- Lisätä, poistaa ja muokata otteluita
+- Nähdä yhteenvedon otteluista
+
+Todo
+- Sovelluksen ja backendin yhdistäminen loppuun
+- Syötteiden validointi
+- Tietoturvan varmistaminen
+
+Development notes (users need not worry):
+
 Starting a PSQL-server:
 ``start-pg.sh``
 Shut down server with ctrl-c
