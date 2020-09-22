@@ -1,0 +1,11 @@
+#VERTAISARVIOINTI 1
+
+Sovellus näyttää olevan hyvällä mallilla! Sitä on mukava ja selkeä käyttää. Onnistuin luomaan käyttäjän ja kirjautumaan sisään 
+sekä lisäämään otteluita luontevasti. Kun lisäilen armeijoita otteluihin, en näe vielä mitään tehtyjä muutoksia. Otaksun, että myöhemmin
+toteutuu mahdollisuus tarkastella ottelukohtaisia armeijoita ja yksiköitä. Sovelluksen backendin rakennetta on helppo seurata ja näyttää siltä,
+että myös tulevan toiminnallisuuden kannalta se on jo hyvässä vaiheessa. 
+
+Sovelluksen rakenne yleensä on selkeä ja kurssin ohjeiden mukainen. Myös tietokanta näyttää tarkoituksenmukaiselta. Kun kaikki todo-listalla oleva toiminnallisuus
+on toteutettu, olisiko vielä jotain lisää, mitä sovelluksella voisi tehdä? Esimerkiksi minua jäi mietityttämään se, onko otteluilla myös 
+tuloksia tai voittajia? Jos on, näiden kirjanpitoa voisi sisällyttää sovellukseen. Olisi myös hauska nähdä esimerkiksi kuvia armeijoista! 
+Sovelluksen ulkonäköä voisi lopulta muokata teemaan sopivaksi.  
