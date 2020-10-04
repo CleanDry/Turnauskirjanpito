@@ -1,6 +1,6 @@
 from app import app
 from flask import render_template, request, redirect
-import users_service, matches_service, armies_service
+import users_service, matches_service, armies_service, units_service
 
 @app.route("/", methods=["GET", "POST"])
 def index():
@@ -69,3 +69,22 @@ def army(matchid, armyid):
     selected_army = armies_service.find_army(armyid)
     includedUnits = armies_service.find_army_units(armyid)
     return render_template("army.html", matchid=matchid, army=selected_army, units=includedUnits, message="")
+
+@app.route("/units", methods=["POST", "UPDATE"])
+def units():
+    if request.method == "POST":
+        match_id = request.form["match_id"]
+        army_id = request.form["army_id"]
+        unit_name = request.form["unit_name"]
+        unit_points = request.form["unit_points"]
+        new_id = units_service.create_new(unit_name, unit_points)
+        print("new unit id", new_id)
+        if (new_id != None):
+            armies_service.add_unit_to_army(army_id, new_id)
+        return redirect("/match/"+match_id+"/army/"+army_id)
+    if request.method == "UPDATE":
+        match_id = request.form["match_id"]
+        army_id = request.form["army_id"]
+        unit_id = request.form["unit_id"]
+        armies_service.remove_unit_from_army(army_id, unit_id)
+        return redirect("/match/"+match_id+"/army/"+army_id)

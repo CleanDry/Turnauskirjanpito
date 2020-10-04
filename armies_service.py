@@ -39,17 +39,19 @@ def find_army_units(army_id):
     sql = "SELECT unit_id FROM armyunit WHERE army_id=:army_id"
     result = db.session.execute(sql, {"army_id": army_id})
     unit_ids = result.fetchall()
+    print("unit_ids", unit_ids)
     fetchedUnits = []
 
     for unit_id in unit_ids:
-        fetchedUnits.append(units_service.find_unit(unit_id))
+        fetchedUnits.append(units_service.find_unit(unit_id[0]))
 
+    print("fetched units", fetchedUnits)
     return fetchedUnits
 
 def add_unit_to_army(ArmyId, UnitId):
     try:
-        sql = "INSERT INTO ArmyUnit (army_id, unit_id) VALUES (:armyid, unitid)"
-        db.session.execute()
+        sql = "INSERT INTO ArmyUnit (army_id, unit_id) VALUES (:armyid, :unitid)"
+        db.session.execute(sql, {"armyid":ArmyId, "unitid":UnitId})
         db.session.commit()
     except:
         return False

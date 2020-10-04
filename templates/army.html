@@ -8,7 +8,7 @@
     Units
     <ul>
         {% for unit in units %}
-        <li> <a href="/unit/{{ unit.unitid }}">{{ unit.unitname }}</a>, {{ unit.points }} pts
+        <li> {{ unit.unitname }}, {{ unit.points }} pts
         {% endfor %}
     </ul>
     <hr>
@@ -16,6 +16,7 @@
         Unit name: <input type="text" name="unit_name">
         Unit points cost: <input type="number" name="unit_points">
         <input type="submit" value="Create a new Unit">
+        <input type="hidden" name="match_id" value="{{ matchid }}">
         <input type="hidden" name="army_id" value="{{ army.armyid }}">
     </form>
     <br>
