@@ -17,6 +17,8 @@ Tällä hetkellä sovelluksessa voi:
 - Nähdä yhteenvedon otteluista
 - Lisätä otteluita
 - Lisätä armeijoita
+- Lisätä yksiköitä
+- Liittää yksiköitä armeijoihin
 
 Tällä hetkellä sovelluksen backend tukee jo:
 - Luoda uuden käyttäjän ja kirjautua olemassaolevan käyttäjän tiedoilla sovellukseen
@@ -27,7 +29,7 @@ Tällä hetkellä sovelluksen backend tukee jo:
 - Nähdä yhteenvedon otteluista
 
 Todo
-- Sovelluksen ja backendin yhdistäminen loppuun
+- Elementtien poistaminen
 - Syötteiden validointi
 - Tietoturvan varmistaminen
 
