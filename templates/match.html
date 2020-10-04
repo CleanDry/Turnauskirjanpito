@@ -9,14 +9,14 @@
     Force 1
     <ul>
         {% for army in force1 %}
-        <li> <a href="/match/+{{ army.armyid }}">{{ army.armyname }}</a>, {{ army.armysize }} pts
+        <li> <a href="/match/{{ match.matchid }}/army/{{ army.armyid }}">{{ army.armyname }}</a>, {{ army.armysize }} pts
         {% endfor %}
     </ul>
     <p>vs</p>
     Force 2
     <ul>
         {% for army in force2 %}
-        <li> <a href="/match/+{{ army.armyid }}">{{ army.armyname }}</a>, {{ army.armysize }} pts
+        <li> <a href="/match/{{ match.matchid }}/army/{{ army.armyid }}">{{ army.armyname }}</a>, {{ army.armysize }} pts
         {% endfor %}
     </ul>
     <hr>

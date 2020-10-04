@@ -1,8 +1,8 @@
 from db import db
-import users_dao
+import users_service, armies_service
 
 def get_matches():
-    user_id = users_dao.user_id()
+    user_id = users_service.user_id()
     if user_id == 0:
         return False
     sql = "SELECT * FROM Match WHERE Match.User_id=:user_id AND Match.visible=1"
@@ -11,7 +11,7 @@ def get_matches():
     return matches
 
 def find_match(id):
-    user_id = users_dao.user_id()
+    user_id = users_service.user_id()
     if user_id == 0:
         return False
     sql = "SELECT * FROM Match WHERE Match.MatchId=:match_id"
@@ -20,7 +20,7 @@ def find_match(id):
     return found_match
 
 def create_new(match_name, match_size):
-    user_id = users_dao.user_id()
+    user_id = users_service.user_id()
     if user_id == 0:
         return False
     print("user_id", user_id)
@@ -33,7 +33,7 @@ def create_new(match_name, match_size):
     return True
 
 def update_match(match_id, match_name, match_size):
-    user_id = users_dao.user_id()
+    user_id = users_service.user_id()
     if user_id == 0:
         return False
     try:
@@ -45,7 +45,7 @@ def update_match(match_id, match_name, match_size):
     return True
 
 def delete_match(match_id):
-    user_id = users_dao.user_id()
+    user_id = users_service.user_id()
     if user_id == 0:
         return False
     try:
@@ -56,8 +56,29 @@ def delete_match(match_id):
         return False
     return True
 
+def find_match_armies(match_id):
+    user_id = users_service.user_id()
+    if user_id == 0:
+        return False
+    sql = "SELECT army_id,army_side FROM matcharmy WHERE match_id=:match_id"
+    result = db.session.execute(sql, {"match_id": match_id})
+    armies = result.fetchall()
+    force1 = []
+    force2 = []
+    
+    for army in armies:
+        if army[1] == 1:
+            force1.append(armies_service.find_army(army[0]))
+        else:
+            force2.append(armies_service.find_army(army[0]))
+
+    forces = []
+    forces.append(force1)
+    forces.append(force2)
+    return forces
+
 def add_army_to_match(match_id, army_id, army_side):
-    user_id = users_dao.user_id()
+    user_id = users_service.user_id()
     if user_id == 0:
         return False
     try:
@@ -69,13 +90,11 @@ def add_army_to_match(match_id, army_id, army_side):
     return True
 
 def remove_army_from_match(match_id, army_id):
-    user_id = users_dao.user_id()
+    user_id = users_service.user_id()
     if user_id == 0:
         return False
     try:
-        sql = "DELETE * FROM MatchArmy" \
-                "WHERE MatchArmy.Army_id = :army_id" \
-                "AND MatchArmy.Match_id = :match_id"
+        sql = "DELETE * FROM MatchArmy WHERE MatchArmy.Army_id = :army_id AND MatchArmy.Match_id = :match_id"
         db.session.execute(sql, {"armyid":army_id, "match_id":match_id})
         db.session.commit()
     except:

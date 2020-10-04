@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+
+{% block title %}Army {{ army.armyname }}{% endblock %}
+
+{% block content %}
+{% if session.username %}
+    <h2>{{ army.armyname }} - {{ army.armysize }} pts</h2>
+    Units
+    <ul>
+        {% for unit in units %}
+        <li> <a href="/unit/{{ unit.unitid }}">{{ unit.unitname }}</a>, {{ unit.points }} pts
+        {% endfor %}
+    </ul>
+    <hr>
+    <form action="/units" method="POST">
+        Unit name: <input type="text" name="unit_name">
+        Unit points cost: <input type="number" name="unit_points">
+        <input type="submit" value="Create a new Unit">
+        <input type="hidden" name="army_id" value="{{ army.armyid }}">
+    </form>
+    <br>
+    {{ message }}
+    Back to <a href="/match/{{ matchid }}">match</a>
+{% else %}
+    <p>Please, <a href="/">log in</a></p>
+{% endif %}
+{% endblock %}
