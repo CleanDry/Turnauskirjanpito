@@ -1,0 +1,34 @@
+{% extends "layout.html" %}
+
+{% block title %}Units{% endblock %}
+
+{% block content %}
+{% if session.username %}
+    <ul>
+        {% for unit in units %}
+        <li> {{ unit.unitname }}, {{ unit.points }} pts 
+            <form action="/unit/{{ unit.unitid }}" method="POST"> 
+                <input type="submit" value="Delete">
+            </form> 
+        </li>
+        {% endfor %}
+    </ul>
+    <hr>
+    <p>Archived units</p>
+    <ul>
+        {% for unit in hidden_units %}
+        <li> {{ unit.unitname }}, {{ unit.points }} pts
+        {% endfor %}
+    </ul>
+    <hr>
+    <form action="/units" method="POST">
+        Unit name: <input type="text" name="unit_name">
+        Unit cost (in points): <input type="number" name="unit_points">
+        <input type="submit" value="Create a new Unit">
+    </form>
+    <br>
+    {{ message }}
+{% else %}
+    <p>Please, <a href="/">log in</a></p>
+{% endif %}
+{% endblock %}

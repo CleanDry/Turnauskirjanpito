@@ -9,19 +9,24 @@
     <ul>
         {% for unit in units %}
         <li> {{ unit.unitname }}, {{ unit.points }} pts
+            <form action="/managearmyunits" method="POST">
+                <input type="submit" value="Remove">
+                <input type="hidden" name="unit_id" value="{{ unit.unitid }}">
+                <input type="hidden" name="army_id" value="{{ army.armyid }}">
+                <input type="hidden" name="operation_type" value="detach">
+            </form>
         {% endfor %}
     </ul>
     <hr>
-    <form action="/units" method="POST">
+    <form action="/managearmyunits" method="POST">
         Unit name: <input type="text" name="unit_name">
         Unit points cost: <input type="number" name="unit_points">
-        <input type="submit" value="Create a new Unit">
-        <input type="hidden" name="match_id" value="{{ matchid }}">
+        <input type="submit" value="Add a Unit">
         <input type="hidden" name="army_id" value="{{ army.armyid }}">
+        <input type="hidden" name="operation_type" value="attach">
     </form>
     <br>
     {{ message }}
-    Back to <a href="/match/{{ matchid }}">match</a>
 {% else %}
     <p>Please, <a href="/">log in</a></p>
 {% endif %}

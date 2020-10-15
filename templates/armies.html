@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+
+{% block title %}Armies{% endblock %}
+
+{% block content %}
+{% if session.username %}
+    <ul>
+        {% for army in armies %}
+        <li> <a href="/army/{{ army.armyid }}">{{ army.armyname }}</a>, {{ army.armysize }} pts 
+            <form action="/army/{{ army.armyid }}" method="POST"> <input type="submit" value="Delete"></form> </li>
+        {% endfor %}
+    </ul>
+    <hr>
+    <form action="/armies" method="POST">
+        Army name: <input type="text" name="army_name">
+        Army max size (in points): <input type="number" name="army_size">
+        <input type="submit" value="Create a new Army">
+    </form>
+    <br>
+    {{ message }}
+{% else %}
+    <p>Please, <a href="/">log in</a></p>
+{% endif %}
+{% endblock %}

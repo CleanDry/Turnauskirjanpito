@@ -2,10 +2,12 @@
 <title>Miniature Match Membrancer - {% block title %}{% endblock %}</title>
 <h1>Miniature Match Membrancer</h1>
 {% if session.username %}
-    <p>Logged in as {{ session.username }}</p>
-    <a href="/logout">Log out</a>
+    <p>Logged in as {{ session.username }} <a href="/logout">Log out</a> </p>
+    <p><a href="/matches">Matches</a> <a href="/armies">Armies</a> <a href="/units">Units</a></p>
+{% else %}
+    <p>Nobody logged in</p>
 {% endif %}
 <hr>
 {% block content %}{% endblock %}
 <hr>
-Code in <a href="#">Github</a>
+Code in <a href="https://github.com/CleanDry/Turnauskirjanpito">Github</a>
