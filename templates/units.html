@@ -9,6 +9,7 @@
         <li> {{ unit.unitname }}, {{ unit.points }} pts 
             <form action="/unit/{{ unit.unitid }}" method="POST"> 
                 <input type="submit" value="Delete">
+                <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
             </form> 
         </li>
         {% endfor %}
@@ -25,6 +26,7 @@
         Unit name: <input type="text" name="unit_name">
         Unit cost (in points): <input type="number" name="unit_points">
         <input type="submit" value="Create a new Unit">
+        <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
     </form>
     <br>
     {{ message }}

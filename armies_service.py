@@ -7,6 +7,12 @@ def get_user_armies():
     result = db.session.execute(sql, {"user_id": user_id})
     return result
 
+def get_user_hidden_armies():
+    user_id = users_service.user_id()
+    sql = "SELECT * FROM Army WHERE Army.User_Id = :user_id AND Army.Visible = 0"
+    result = db.session.execute(sql, {"user_id": user_id})
+    return result
+
 def find_army(army_id):
     sql = "SELECT * FROM Army WHERE Army.ArmyId = :army_id AND Army.Visible = 1"
     result = db.session.execute(sql, {"army_id": army_id})
@@ -17,8 +23,8 @@ def find_army_with_name_and_size(army_name, army_size, user_id):
     sql = "SELECT * FROM Army " \
         "WHERE Army.Armyname = :army_name AND Army.Armysize = :army_size AND Army.User_id = :user_id"
     result = db.session.execute(sql, {"army_name": army_name, "army_size": army_size, "user_id": user_id})
-    found_unit = result.fetchone()
-    return found_unit
+    found_army = result.fetchone()
+    return found_army
 
 def create_new(army_name, army_size):
     user_id = users_service.user_id()
@@ -40,7 +46,7 @@ def create_new(army_name, army_size):
 
 def delete(army_id):
     try:
-        sql = "UPDATE Army SET visible=0 WHERE ArmyId=:army_id"
+        sql = "UPDATE Army SET visible = 0 WHERE ArmyId = :army_id"
         db.session.execute(sql, {"army_id": army_id})
         db.session.commit()
     except:
@@ -60,7 +66,7 @@ def find_army_units(army_id):
     user_id = users_service.user_id()
     if user_id == 0:
         return False
-    sql = "SELECT unit_id FROM armyunit WHERE army_id=:army_id"
+    sql = "SELECT unit_id FROM armyunit WHERE army_id = :army_id"
     result = db.session.execute(sql, {"army_id": army_id})
     unit_ids = result.fetchall()
     fetchedUnits = []

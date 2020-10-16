@@ -14,6 +14,7 @@
                 <input type="hidden" name="unit_id" value="{{ unit.unitid }}">
                 <input type="hidden" name="army_id" value="{{ army.armyid }}">
                 <input type="hidden" name="operation_type" value="detach">
+                <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
             </form>
         {% endfor %}
     </ul>
@@ -24,6 +25,7 @@
         <input type="submit" value="Add a Unit">
         <input type="hidden" name="army_id" value="{{ army.armyid }}">
         <input type="hidden" name="operation_type" value="attach">
+        <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
     </form>
     <br>
     {{ message }}

@@ -14,6 +14,7 @@
         Match name: <input type="text" name="match_name">
         Match size (in points): <input type="number" name="match_size">
         <input type="submit" value="Create a new Match">
+        <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
     </form>
     <br>
     {{ message }}

@@ -7,7 +7,18 @@
     <ul>
         {% for army in armies %}
         <li> <a href="/army/{{ army.armyid }}">{{ army.armyname }}</a>, {{ army.armysize }} pts 
-            <form action="/army/{{ army.armyid }}" method="POST"> <input type="submit" value="Delete"></form> </li>
+            <form action="/army/{{ army.armyid }}" method="POST"> 
+                <input type="submit" value="Delete">
+                <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+            </form> 
+        </li>
+        {% endfor %}
+    </ul>
+    <hr>
+    <p>Archived armies</p>
+    <ul>
+        {% for army in hidden_armies %}
+        <li> {{ army.armyname }}, {{ army.armysize }} pts
         {% endfor %}
     </ul>
     <hr>
@@ -15,6 +26,7 @@
         Army name: <input type="text" name="army_name">
         Army max size (in points): <input type="number" name="army_size">
         <input type="submit" value="Create a new Army">
+        <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
     </form>
     <br>
     {{ message }}
