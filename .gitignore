@@ -2,4 +2,4 @@ __pycache__
 venv
 .env
 .pylintrc
-test_entries.sql
+devnotes
