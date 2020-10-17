@@ -7,7 +7,7 @@
     <p>Logged in as {{ session.username }}</p>
     <a href="/logout">Kirjaudu ulos</a>
 {% else %}
-    <form action="/register" method="POST">
+    <form action="/register" method="POST" onsubmit="return check(this)">
         <p>Username:<br>
         <input type="username" name="username"></p>
         <p>Password:<br>
@@ -18,4 +18,19 @@
     <br>
     {{ message }}
 {% endif %}
+
+<script>
+    function check(form) {
+        if (form.username.value.length > 32 | form.password.value.length > 32) {
+            alert("Username and password must be less than 32 charaters long");
+            return false;
+        }
+        if (form.username.value.length < 3 | form.password.value.length < 3) {
+            alert("Username and password must more than 3 charaters long");
+            return false;
+        }
+        return true;
+    }
+</script>
+
 {% endblock %}

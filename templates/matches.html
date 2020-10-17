@@ -10,7 +10,7 @@
         {% endfor %}
     </ul>
     <hr>
-    <form action="/matches" method="POST">
+    <form action="/matches" method="POST" onsubmit="return check(this)">
         Match name: <input type="text" name="match_name">
         Match size (in points): <input type="number" name="match_size">
         <input type="submit" value="Create a new Match">
@@ -21,4 +21,19 @@
 {% else %}
     <p>Please, <a href="/">log in</a></p>
 {% endif %}
+
+<script>
+    function check(form) {
+        if (form.match_name.value.length < 3 | form.match_name.value.length > 64) {
+            alert("Match name must be 3-64 charaters long");
+            return false;
+        }
+        if (form.match_size.value.length < 3 | form.match_size.value.length > 6) {
+            alert("Match size must be between 100 - 999 999");
+            return false;
+        }
+        return true;
+    }
+</script>
+
 {% endblock %}

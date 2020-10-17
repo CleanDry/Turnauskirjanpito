@@ -1,14 +1,12 @@
 from db import db
-import users_service, units_service
+import units_service
 
-def get_user_armies():
-    user_id = users_service.user_id()
+def get_user_armies(user_id):
     sql = "SELECT * FROM Army WHERE Army.User_Id = :user_id AND Army.Visible = 1"
     result = db.session.execute(sql, {"user_id": user_id})
     return result
 
-def get_user_hidden_armies():
-    user_id = users_service.user_id()
+def get_user_hidden_armies(user_id):
     sql = "SELECT * FROM Army WHERE Army.User_Id = :user_id AND Army.Visible = 0"
     result = db.session.execute(sql, {"user_id": user_id})
     return result
@@ -26,10 +24,7 @@ def find_army_with_name_and_size(army_name, army_size, user_id):
     found_army = result.fetchone()
     return found_army
 
-def create_new(army_name, army_size):
-    user_id = users_service.user_id()
-    if user_id == 0:
-        return False
+def create_new(army_name, army_size, user_id):
     existing_army = find_army_with_name_and_size(army_name, army_size, user_id)
     if (existing_army != None):
         make_visible(existing_army[0])
@@ -63,9 +58,6 @@ def make_visible(army_id):
     return True
 
 def find_army_units(army_id):
-    user_id = users_service.user_id()
-    if user_id == 0:
-        return False
     sql = "SELECT unit_id FROM armyunit WHERE army_id = :army_id"
     result = db.session.execute(sql, {"army_id": army_id})
     unit_ids = result.fetchall()

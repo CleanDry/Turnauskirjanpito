@@ -1,14 +1,11 @@
 from db import db
-import users_service
 
-def get_user_units():
-    user_id = users_service.user_id()
+def get_user_units(user_id):
     sql = "SELECT * FROM Unit WHERE Unit.User_Id = :userid AND Unit.Visible = 1"
     result = db.session.execute(sql, {"userid": user_id})
     return result
 
-def get_user_hidden_units():
-    user_id = users_service.user_id()
+def get_user_hidden_units(user_id):
     sql = "SELECT * FROM Unit WHERE Unit.User_Id = :userid AND Unit.Visible = 0"
     result = db.session.execute(sql, {"userid": user_id})
     return result
@@ -26,10 +23,7 @@ def find_unit_with_name_and_points(unit_name, unit_points, user_id):
     found_unit = result.fetchone()
     return found_unit
 
-def create_new(unit_name, unit_points):
-    user_id = users_service.user_id()
-    if user_id == 0:
-        return False
+def create_new(unit_name, unit_points, user_id):
     existing_unit = find_unit_with_name_and_points(unit_name, unit_points, user_id)
     if (existing_unit != None):
         make_visible(existing_unit[0])

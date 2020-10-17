@@ -22,7 +22,7 @@
         {% endfor %}
     </ul>
     <hr>
-    <form action="/armies" method="POST">
+    <form action="/armies" method="POST" onsubmit="return checkArmy(this)">
         Army name: <input type="text" name="army_name">
         Army max size (in points): <input type="number" name="army_size">
         <input type="submit" value="Create a new Army">
@@ -33,4 +33,19 @@
 {% else %}
     <p>Please, <a href="/">log in</a></p>
 {% endif %}
+
+<script>
+    function checkArmy(form) {
+        if (form.army_name.value.length < 3 | form.army_name.value.length > 64) {
+            alert("Match name must be 3-64 charaters long");
+            return false;
+        }
+        if (form.army_size.value.length < 3 | form.army_size.value.length > 6) {
+            alert("Match size must be between 100 - 999 999");
+            return false;
+        }
+        return true;
+    }
+</script>
+
 {% endblock %}

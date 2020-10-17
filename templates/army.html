@@ -19,7 +19,7 @@
         {% endfor %}
     </ul>
     <hr>
-    <form action="/managearmyunits" method="POST">
+    <form action="/managearmyunits" method="POST" onsubmit="return checkUnit(this)">
         Unit name: <input type="text" name="unit_name">
         Unit points cost: <input type="number" name="unit_points">
         <input type="submit" value="Add a Unit">
@@ -32,4 +32,19 @@
 {% else %}
     <p>Please, <a href="/">log in</a></p>
 {% endif %}
+
+<script>
+    function checkUnit(form) {
+        if (form.unit_name.value.length < 3 | form.unit_name.value.length > 64) {
+            alert("Match name must be 3-64 charaters long");
+            return false;
+        }
+        if (form.unit_points.value.length < 3 | form.unit_points.value.length > 6) {
+            alert("Match size must be between 0 - 9 999");
+            return false;
+        }
+        return true;
+    }
+</script>
+
 {% endblock %}

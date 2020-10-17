@@ -9,7 +9,6 @@ def index():
     if request.method == "POST":
         username = request.form["username"].strip()
         password = request.form["password"].strip()
-        print("un", username, "pw", password)
         if not (utils.validate_input(username, 3, 32) & utils.validate_input(password, 3, 32)):
             return render_template("index.html", message="Incorrect username or password!")
             
@@ -19,7 +18,6 @@ def index():
         else:
             return render_template("index.html", message=message)
             
-
 @app.route("/logout")
 def logout():
     if users_service.user_id:
@@ -34,7 +32,6 @@ def register():
         message = ""
         username = request.form["username"].strip()
         password = request.form["password"].strip()
-        
         if not (utils.validate_input(username, 3, 32) & utils.validate_input(password, 3, 32)):
             return render_template("register.html", message = "Username and password must be 3-32 characters and contain only letters and numbers.")
         
@@ -52,8 +49,9 @@ def matches():
     if not users_service.user_id:
         return redirect("/")
 
+    returned_matches = matches_service.get_user_matches(users_service.user_id())
+
     if request.method == "GET":
-        returned_matches = matches_service.get_user_matches()
         return render_template("matches.html", matches=returned_matches, message="")
     if request.method == "POST":
         if users_service.get_csrf_token() != request.form["csrf_token"]:
@@ -61,26 +59,47 @@ def matches():
 
         match_name = request.form["match_name"].strip()
         match_size = request.form["match_size"].strip()
-        if (matches_service.create_new(match_name, match_size)):
+        if not (utils.validate_input(match_name, 3, 64) & utils.validate_input(match_size, 3, 6)):
+            return render_template("matches.html", matches=returned_matches, 
+                message="Match name must be 3-64 and match size between 3-6 characters, and contain only numbers or letters")
+        if (matches_service.create_new(match_name, match_size, users_service.user_id())):
             return redirect("/matches")
         else:
-            returned_matches = matches_service.get_user_matches()
-            return render_template("matches.html", matches=returned_matches, message="Failed to create a new Match")
+            return render_template("matches.html", matches=returned_matches, message="Invalid match name or size.")
 
-@app.route("/match/<int:id>", methods=["GET"])
-def match(id):
+@app.route("/match/<int:match_id>", methods=["GET", "POST"])
+def match(match_id):
     if not users_service.user_id:
         return redirect("/")
 
-    selected_match = matches_service.find_match(id)
-    involvedForces = matches_service.find_match_armies(id)
+    selected_match = matches_service.find_match(match_id)
+    involvedForces = matches_service.find_match_armies(match_id)
     force1 = involvedForces[0]
     force2 = involvedForces[1]
-    return render_template("match.html", match=selected_match, force1=force1, force2=force2, message="")
+
+    if request.method == "GET":
+        return render_template("match.html", match=selected_match, force1=force1, force2=force2, message="")
+
+    if request.method == "POST":
+        if users_service.get_csrf_token() != request.form["csrf_token"]:
+            abort(403)
+
+        match_name = request.form["match_name"].strip()
+        match_size = request.form["match_size"].strip()
+        if not (utils.validate_input(match_name, 3, 64) & utils.validate_input(match_size, 3, 6)):
+            return render_template("match.html", match=selected_match, force1=force1, force2=force2,
+                message="Match name must be 3-64 and match size between 3-6 characters, and contain only numbers or letters")
+
+        if matches_service.update_match(match_id, match_name, match_size, users_service.user_id()):
+            return redirect("/match/"+str(match_id))
+        else:
+            return render_template("match.html", match=selected_match, force1=force1, force2=force2,
+                message="Invalid match name or size.")
 
 @app.route("/managematcharmies", methods=["POST"])
 def managematcharmies():
-    if not users_service.user_id:
+    user_id = users_service.user_id()
+    if not user_id:
         return redirect("/")
     if users_service.get_csrf_token() != request.form["csrf_token"]:
         abort(403)
@@ -92,7 +111,10 @@ def managematcharmies():
         army_name = request.form["army_name"].strip()
         army_size = request.form["army_size"].strip()
         army_side = request.form["force"]
-        new_or_existing_id = armies_service.create_new(army_name, army_size)
+        if not (utils.validate_input(army_name, 3, 64) & utils.validate_input(army_size, 3, 6)):
+            return redirect("/match/"+match_id)
+        
+        new_or_existing_id = armies_service.create_new(army_name, army_size, user_id)
         if (new_or_existing_id != None):
             matches_service.add_army_to_match(match_id, new_or_existing_id, army_side)
         return redirect("/match/"+match_id)
@@ -104,12 +126,14 @@ def managematcharmies():
 
 @app.route("/armies", methods=["GET", "POST"])
 def armies():
-    if not users_service.user_id:
+    user_id = users_service.user_id()
+    if not user_id:
         return redirect("/")
 
+    user_armies = armies_service.get_user_armies(user_id)
+    user_hidden_armies = armies_service.get_user_hidden_armies(user_id)
+
     if request.method == "GET":
-        user_armies = armies_service.get_user_armies()
-        user_hidden_armies = armies_service.get_user_hidden_armies()
         return render_template("armies.html", armies=user_armies, hidden_armies=user_hidden_armies, message="")
 
     if request.method == "POST":
@@ -118,7 +142,11 @@ def armies():
 
         army_name = request.form["army_name"].strip()
         army_size = request.form["army_size"].strip()
-        armies_service.create_new(army_name, army_size)
+        if not (utils.validate_input(army_name, 3, 64) & utils.validate_input(army_size, 3, 6)):
+            return render_template("armies.html", armies=user_armies, hidden_armies=user_hidden_armies, 
+            message="Army name must be 3-64 and army size between 3-6 characters, and contain only numbers or letters")
+
+        armies_service.create_new(army_name, army_size, user_id)
         return redirect("/armies")
 
 @app.route("/army/<int:army_id>", methods=["GET", "POST"])
@@ -140,7 +168,8 @@ def army(army_id):
 
 @app.route("/managearmyunits", methods=["POST"])
 def managearmyunits():
-    if not users_service.user_id:
+    user_id = users_service.user_id()
+    if not user_id:
         return redirect("/")
     if users_service.get_csrf_token() != request.form["csrf_token"]:
         abort(403)
@@ -151,7 +180,10 @@ def managearmyunits():
     if (op_type == "attach"):
         unit_name = request.form["unit_name"].strip()
         unit_points = request.form["unit_points"].strip()
-        new_or_existing_id = units_service.create_new(unit_name, unit_points)
+        if not (utils.validate_input(army_name, 3, 64) & utils.validate_input(army_size, 3, 6)):
+            return redirect("/army/"+army_id)
+
+        new_or_existing_id = units_service.create_new(unit_name, unit_points, user_id)
         if (new_or_existing_id != None):
             armies_service.add_unit_to_army(army_id, new_or_existing_id)
         return redirect("/army/"+army_id)
@@ -163,12 +195,14 @@ def managearmyunits():
 
 @app.route("/units", methods=["GET", "POST"])
 def units():
-    if not users_service.user_id:
+    user_id = users_service.user_id()
+    if not user_id:
         return redirect("/")
 
+    user_units = units_service.get_user_units(user_id)
+    user_hidden_units = units_service.get_user_hidden_units(user_id)
+
     if request.method == "GET":
-        user_units = units_service.get_user_units()
-        user_hidden_units = units_service.get_user_hidden_units()
         return render_template("units.html", units=user_units, hidden_units=user_hidden_units, message="")
 
     if request.method == "POST":
@@ -177,7 +211,11 @@ def units():
 
         unit_name = request.form["unit_name"].strip()
         unit_points = request.form["unit_points"].strip()
-        units_service.create_new(unit_name, unit_points)
+        if not (utils.validate_input(unit_name, 3, 64) & utils.validate_input(unit_points, 1, 4)):
+            return render_template("units.html", units=user_units, hidden_units=user_hidden_units, 
+            message="Unit name must be 3-64 and unit points cost between 1-4 characters, and contain only numbers or letters")
+
+        units_service.create_new(unit_name, unit_points, user_id)
         return redirect("/units")
 
 @app.route("/unit/<int:unit_id>", methods=["POST"])
