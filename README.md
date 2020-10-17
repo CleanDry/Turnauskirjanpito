@@ -1,37 +1,20 @@
 # Turnauskirjanpito
 HY Tietokantasovelluksen harjoitustyö
 
-Sovelluksen velmistuttua sillä voi:
+Sovellus pöytäsotapelien suunnittelua ja taltioimista varten.
+Sovelluksella voi:
 - Luoda uuden käyttäjän ja kirjautua olemassaolevan käyttäjän tiedoilla sovellukseen
 - Lisätä ja poistaa yksiköitä
 - Lisätä ja poistaa armeijoita
+- Lisätä ja muokata otteluita
 - Liittää ja irroittaa yksiköitä armeijoihin
-- Lisätä, poistaa ja muokata otteluita
-- Nähdä yhteenvedon otteluista
+- Liittää ja irroittaa armeijoita otteluihin
+- Nähdä yhteenvedon otteluista, armeijoista ja yksiköistä
 
 Sovellus on testattavissa osoitteessa:
 https://tsoha-membrancer.herokuapp.com/
 
-Tällä hetkellä sovelluksessa voi:
-- Luoda uuden käyttäjän ja kirjautua olemassaolevan käyttäjän tiedoilla sovellukseen
-- Nähdä yhteenvedon otteluista
-- Lisätä otteluita
-- Lisätä armeijoita
-- Lisätä yksiköitä
-- Liittää yksiköitä armeijoihin
 
-Tällä hetkellä sovelluksen backend tukee jo:
-- Luoda uuden käyttäjän ja kirjautua olemassaolevan käyttäjän tiedoilla sovellukseen
-- Lisätä ja poistaa yksiköitä
-- Lisätä ja poistaa armeijoita
-- Liittää ja irroittaa yksiköitä armeijoihin
-- Lisätä, poistaa ja muokata otteluita
-- Nähdä yhteenvedon otteluista
-
-Todo
-- Elementtien poistaminen
-- Syötteiden validointi
-- Tietoturvan varmistaminen
 
 Development notes (users need not worry):
 
