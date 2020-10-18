@@ -4,25 +4,28 @@
 
 {% block content %}
 {% if session.username %}
+    <h2>Armies</h2>
+
     <ul>
         {% for army in armies %}
         <li> <a href="/army/{{ army.armyid }}">{{ army.armyname }}</a>, {{ army.armysize }} pts 
-            <form action="/army/{{ army.armyid }}" method="POST"> 
+            <form class="editForm" action="/army/{{ army.armyid }}" method="POST"> 
                 <input type="submit" value="Delete">
                 <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
             </form> 
         </li>
         {% endfor %}
     </ul>
-    <hr>
+    <hr class="big-gap-hr">
     <p>Archived armies</p>
     <ul>
         {% for army in hidden_armies %}
-        <li> {{ army.armyname }}, {{ army.armysize }} pts
+        <li class="staticListItem"> {{ army.armyname }}, {{ army.armysize }} pts
         {% endfor %}
     </ul>
-    <hr>
-    <form action="/armies" method="POST" onsubmit="return checkArmy(this)">
+    <hr class="big-gap-hr">
+    <h4>Create a new Army</h4>
+    <form class="inputForm" action="/armies" method="POST" onsubmit="return checkArmy(this)">
         Army name: <input type="text" name="army_name">
         Army max size (in points): <input type="number" name="army_size">
         <input type="submit" value="Create a new Army">

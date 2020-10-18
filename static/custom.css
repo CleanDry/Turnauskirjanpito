@@ -1,0 +1,120 @@
+.header {
+    background: tan;
+    font-weight: bold;
+    padding: 1em 1em;
+    font-size: 1em;
+    border-radius: .5em;
+    margin-top: .5em;
+}
+
+.top-bar {
+    background: wheat;
+    border-radius: .5em;
+    margin-top: .5em;
+}
+
+li {
+    max-width: 43em;
+    min-height: 1.3em;
+}
+
+li a {
+    color: black;
+}
+
+li:hover {
+    background-color: cornsilk;
+}
+
+nav ul {
+    padding: 0;
+}
+
+nav li {
+    display: inline-block;
+    min-height: 0em;
+    padding: .5em 1em;
+    border-radius: .5em;
+    margin: .2em;
+}
+
+nav li:hover {
+    background-color: lightyellow;
+}
+
+nav li a {
+    text-decoration: none;
+    font-weight: bold;
+    color: black;
+}
+
+.staticListItem:hover {
+    background-color: transparent;
+}
+
+.login {
+    display: block;
+    float: right;
+    padding: .5em 0em;
+    margin: .2em;
+}
+
+.login a {
+    padding: .5em 1em;
+    border-radius: .5em;
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+}
+
+.login a:hover {
+    background-color: lightyellow;
+}
+
+body {
+    margin: auto;
+    max-width: 50em;
+    font-family: 'Helvetica', 'Arial', sans-serif;
+    background-color: ivory;
+}
+
+hr {
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+}
+
+.big-gap-hr {
+    margin-block-start: 2em;
+}
+
+.center-element {
+    background: linen;
+    border-radius: .5em;
+    padding: 1em 1em 1em 1em;
+}
+
+.center-element h2 {
+    margin-block-start: 0em;
+}
+
+.center-element h4 {
+    margin-block-start: .5em;
+    margin-block-end: .7em;
+}
+
+.inputForm {
+    display: inline-block;
+}
+
+.inputForm input[type=text] {
+    margin: 0em 1em .3em 0em;
+}
+
+.inputForm input[type=number] {
+    margin: 0em 1em .3em 0em;
+}
+
+.editForm {
+    display: inline-block;
+    margin-left: .3em;
+}

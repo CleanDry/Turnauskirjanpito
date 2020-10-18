@@ -4,25 +4,28 @@
 
 {% block content %}
 {% if session.username %}
+    <h2>Units</h2>
+
     <ul>
         {% for unit in units %}
-        <li> {{ unit.unitname }}, {{ unit.points }} pts 
-            <form action="/unit/{{ unit.unitid }}" method="POST"> 
+        <li class="staticListItem"> {{ unit.unitname }}, {{ unit.points }} pts 
+            <form class="editForm" action="/unit/{{ unit.unitid }}" method="POST"> 
                 <input type="submit" value="Delete">
                 <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
             </form> 
         </li>
         {% endfor %}
     </ul>
-    <hr>
+    <hr class="big-gap-hr">
     <p>Archived units</p>
     <ul>
         {% for unit in hidden_units %}
-        <li> {{ unit.unitname }}, {{ unit.points }} pts
+        <li class="staticListItem"> {{ unit.unitname }}, {{ unit.points }} pts
         {% endfor %}
     </ul>
-    <hr>
-    <form action="/units" method="POST" onsubmit="return checkUnit(this)">
+    <hr class="big-gap-hr">
+    <h4>Create a new Unit</h4>
+    <form class="inputForm" action="/units" method="POST" onsubmit="return checkUnit(this)">
         Unit name: <input type="text" name="unit_name">
         Unit cost (in points): <input type="number" name="unit_points">
         <input type="submit" value="Create a new Unit">

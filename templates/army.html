@@ -8,8 +8,8 @@
     Units
     <ul>
         {% for unit in units %}
-        <li> {{ unit.unitname }}, {{ unit.points }} pts
-            <form action="/managearmyunits" method="POST">
+        <li class="staticListItem"> {{ unit.unitname }}, {{ unit.points }} pts
+            <form class="editForm" action="/managearmyunits" method="POST">
                 <input type="submit" value="Remove">
                 <input type="hidden" name="unit_id" value="{{ unit.unitid }}">
                 <input type="hidden" name="army_id" value="{{ army.armyid }}">
@@ -18,8 +18,9 @@
             </form>
         {% endfor %}
     </ul>
-    <hr>
-    <form action="/managearmyunits" method="POST" onsubmit="return checkUnit(this)">
+    <hr class="big-gap-hr">
+    <h4>Add a Unit</h4>
+    <form class="inputForm" action="/managearmyunits" method="POST" onsubmit="return checkUnit(this)">
         Unit name: <input type="text" name="unit_name">
         Unit points cost: <input type="number" name="unit_points">
         <input type="submit" value="Add a Unit">

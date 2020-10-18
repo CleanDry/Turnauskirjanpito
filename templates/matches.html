@@ -4,13 +4,16 @@
 
 {% block content %}
 {% if session.username %}
+    <h2>Matches</h2>
+
     <ul>
         {% for match in matches %}
         <li> <a href="/match/{{ match.matchid }}">{{ match.matchname }}</a> , {{ match.matchsize }} pts
         {% endfor %}
     </ul>
-    <hr>
-    <form action="/matches" method="POST" onsubmit="return check(this)">
+    <hr class="big-gap-hr">
+    <h4>Create a new Match</h4>
+    <form class="inputForm" action="/matches" method="POST" onsubmit="return check(this)">
         Match name: <input type="text" name="match_name">
         Match size (in points): <input type="number" name="match_size">
         <input type="submit" value="Create a new Match">

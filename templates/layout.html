@@ -1,13 +1,32 @@
 <!doctype html>
+<link rel="stylesheet" href="../static/custom.css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Miniature Match Membrancer - {% block title %}{% endblock %}</title>
-<h1>Miniature Match Membrancer</h1>
-{% if session.username %}
-    <p>Logged in as {{ session.username }} <a href="/logout">Log out</a> </p>
-    <p><a href="/matches">Matches</a> <a href="/armies">Armies</a> <a href="/units">Units</a></p>
-{% else %}
-    <p>Nobody logged in</p>
-{% endif %}
-<hr>
-{% block content %}{% endblock %}
-<hr>
-Code in <a href="https://github.com/CleanDry/Turnauskirjanpito">Github</a>
+
+<body>
+    <div class="header">
+        <h1>Miniature Match Membrancer</h1>
+    </div>
+    
+    <div class="top-bar">
+        {% if session.username %}
+        <div class="login">Logged in as {{ session.username }} <a href="/logout">Log out</a> </div>
+        <nav>
+            <ul>
+                <li><a href="/matches">Matches</a></li>
+                <li><a href="/armies">Armies</a></li>
+                <li><a href="/units">Units</a></li>
+            </ul>
+        </nav>
+        {% else %}
+        {% endif %}
+    </div>
+
+    <div class="center-element">
+        <div class="content">
+            {% block content %}{% endblock %}
+        </div>
+        <hr class="big-gap-hr">
+        Code in <a href="https://github.com/CleanDry/Turnauskirjanpito">Github</a>
+    </div>
+</body>
