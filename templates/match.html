@@ -86,13 +86,15 @@
 <script>
     function checkArmy(form) {
         if (form.army_name.value.length < 3 | form.army_name.value.length > 64) {
-            alert("Match name must be 3-64 charaters long");
+            alert("Army name must be 3-64 charaters long");
             return false;
         }
         if (form.army_size.value < 100 | form.army_size.value > 100000) {
-            alert("Match size must be between 100 - 100 000");
+            alert("Army size must be between 100 - 100 000");
             return false;
         }
+        if (!form.force.value)
+            alert("An Army must have a side when being added to a Match")
         return true;
     }
 </script>

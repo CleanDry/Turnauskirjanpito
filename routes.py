@@ -113,6 +113,8 @@ def managematcharmies():
         army_side = request.form["force"]
         if not (utils.validate_input(army_name, 3, 64) & utils.validate_input(army_size, 3, 6)):
             return redirect("/match/"+match_id)
+        if not army_side:
+            return redirect("/match/"+match_id)
         
         new_or_existing_id = armies_service.create_new(army_name, army_size, user_id)
         if (new_or_existing_id != None):
@@ -180,7 +182,7 @@ def managearmyunits():
     if (op_type == "attach"):
         unit_name = request.form["unit_name"].strip()
         unit_points = request.form["unit_points"].strip()
-        if not (utils.validate_input(army_name, 3, 64) & utils.validate_input(army_size, 3, 6)):
+        if not (utils.validate_input(unit_name, 3, 64) & utils.validate_input(unit_points, 1, 4)):
             return redirect("/army/"+army_id)
 
         new_or_existing_id = units_service.create_new(unit_name, unit_points, user_id)
