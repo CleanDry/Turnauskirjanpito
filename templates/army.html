@@ -20,6 +20,13 @@
     </ul>
     <hr class="big-gap-hr">
     <h4>Add a Unit</h4>
+    <p class="infoPara">Add a Unit. A Unit represents a troop of fighters, a squadron of vehicles, or a single powerful engine of war. 
+        A Unit has a name and a points cost. 
+        A Unit's name must be between 3 and 64 characters, and contains only numbers or letters.
+        Unit's points cost is a number between 0 and 1 000.
+
+        You can use existing Units by inputting matching information.
+    </p>
     <form class="inputForm" action="/managearmyunits" method="POST" onsubmit="return checkUnit(this)">
         Unit name: <input type="text" name="unit_name">
         Unit points cost: <input type="number" name="unit_points">
@@ -37,11 +44,11 @@
 <script>
     function checkUnit(form) {
         if (form.unit_name.value.length < 3 | form.unit_name.value.length > 64) {
-            alert("Match name must be 3-64 charaters long");
+            alert("Unit name must be 3-64 charaters long");
             return false;
         }
-        if (form.unit_points.value.length < 3 | form.unit_points.value.length > 6) {
-            alert("Match size must be between 0 - 9 999");
+        if (form.unit_points.value < 0 | form.unit_points.value > 10000) {
+            alert("Unit size must be between 0 - 9 999");
             return false;
         }
         return true;

@@ -13,6 +13,12 @@
     </ul>
     <hr class="big-gap-hr">
     <h4>Create a new Match</h4>
+
+    <p class="infoPara">Create a new Match, where two or more Armies face off on opposing sides. 
+        Match has a name that is between 3 and 64 characters, and contains only numbers or letters.
+        Match also has a size, which is between 100 and 100 000 in points.
+    </p>
+
     <form class="inputForm" action="/matches" method="POST" onsubmit="return check(this)">
         Match name: <input type="text" name="match_name">
         Match size (in points): <input type="number" name="match_size">
@@ -31,8 +37,8 @@
             alert("Match name must be 3-64 charaters long");
             return false;
         }
-        if (form.match_size.value.length < 3 | form.match_size.value.length > 6) {
-            alert("Match size must be between 100 - 999 999");
+        if (form.match_size.value < 100 | form.match_size.value > 100000) {
+            alert("Match size must be between 100 - 100 000");
             return false;
         }
         return true;

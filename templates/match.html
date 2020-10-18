@@ -35,6 +35,7 @@
     </ul>
     <hr class="big-gap-hr">
     <h4>Edit match details</h4>
+    <p class="infoPara">Edit match details here. Match details follow the same rules as the Army details found below.</p>
     <form class="inputForm" action="/match/{{ match.matchid }}" method="POST" onsubmit="return checkMatch(this)">
         Match name: <input type="text" name="match_name">
         Match size (in points): <input type="number" name="match_size">
@@ -43,7 +44,13 @@
     </form>
     <hr class="big-gap-hr">
     <h4>Add an Army</h4>
-    <p>You can use existing armies by inputting matching info</p>
+    <p class="infoPara">Add an Army, a fighting force that consists of Units. 
+        An Army has a name and a maximum points size.
+        An Army's name is between 3 and 64 characters, and contains only numbers or letters.
+        An Army's maximum points size must be between 100 and 100 000.
+
+        You can use existing armies by inputting matching information.
+    </p>
     <form class="inputForm" action="/managematcharmies" method="POST" onsubmit="return checkArmy(this)">
         Army name: <input type="text" name="army_name">
         Army size (in points): <input type="number" name="army_size">
@@ -68,8 +75,8 @@
             alert("Match name must be 3-64 charaters long");
             return false;
         }
-        if (form.match_size.value.length < 3 | form.match_size.value.length > 6) {
-            alert("Match size must be between 100 - 999 999");
+        if (form.match_size.value < 100 | form.match_size.value > 100000) {
+            alert("Match size must be between 100 - 100 000");
             return false;
         }
         return true;
@@ -82,8 +89,8 @@
             alert("Match name must be 3-64 charaters long");
             return false;
         }
-        if (form.army_size.value.length < 3 | form.army_size.value.length > 6) {
-            alert("Match size must be between 100 - 999 999");
+        if (form.army_size.value < 100 | form.army_size.value > 100000) {
+            alert("Match size must be between 100 - 100 000");
             return false;
         }
         return true;

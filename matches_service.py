@@ -53,7 +53,7 @@ def find_match_armies(match_id):
     force2 = []
     
     for army in armies:
-        if army[1] == 1:
+        if army[0] == 1:
             force1.append(army)
         else:
             force2.append(army)

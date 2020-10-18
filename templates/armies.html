@@ -25,6 +25,14 @@
     </ul>
     <hr class="big-gap-hr">
     <h4>Create a new Army</h4>
+    <p class="infoPara">Add an Army, a fighting force that consists of Units. 
+        An Army has a name and a maximum points size.
+        An Army's name is between 3 and 64 characters, and contains only numbers or letters.
+        An Army's maximum points size must be between 100 and 100 000.
+
+        You can use existing armies by inputting matching information.
+        You can return archived Armies by inputting their information.
+    </p>
     <form class="inputForm" action="/armies" method="POST" onsubmit="return checkArmy(this)">
         Army name: <input type="text" name="army_name">
         Army max size (in points): <input type="number" name="army_size">
@@ -43,8 +51,8 @@
             alert("Match name must be 3-64 charaters long");
             return false;
         }
-        if (form.army_size.value.length < 3 | form.army_size.value.length > 6) {
-            alert("Match size must be between 100 - 999 999");
+        if (form.army_size.value < 100 | form.army_size.value > 100000) {
+            alert("Match size must be between 100 - 100 000");
             return false;
         }
         return true;
