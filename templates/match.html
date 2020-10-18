@@ -93,9 +93,10 @@
             alert("Army size must be between 100 - 100 000");
             return false;
         }
-        if (!form.force.value)
+        if (!form.force.value) {
             alert("An Army must have a side when being added to a Match")
             return false;
+        }
         return true;
     }
 </script>
