@@ -58,13 +58,14 @@ def make_visible(army_id):
     return True
 
 def find_army_units(army_id):
-    sql = "SELECT unit_id FROM armyunit WHERE army_id = :army_id"
+    sql = "SELECT Unit.UnitId, Unit.Unitname, Unit.Points, Unit.User_id, Unit.Visible FROM unit, armyunit " \
+        "WHERE ArmyUnit.Army_id = :army_id AND ArmyUnit.Unit_id = Unit.UnitId"
     result = db.session.execute(sql, {"army_id": army_id})
-    unit_ids = result.fetchall()
+    units = result.fetchall()
     fetchedUnits = []
 
-    for unit_id in unit_ids:
-        fetchedUnits.append(units_service.find_unit(unit_id[0]))
+    for unit in units:
+        fetchedUnits.append(unit)
 
     return fetchedUnits
 

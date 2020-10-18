@@ -45,7 +45,8 @@ def update_match(match_id, match_name, match_size, user_id):
     return False
 
 def find_match_armies(match_id):
-    sql = "SELECT army_id, army_side FROM matcharmy WHERE match_id = :match_id"
+    sql = "SELECT MatchArmy.Army_side, Army.ArmyId, Army.Armyname, Army.Armysize, Army.User_id, Army.Visible " \
+        "FROM Army, MatchArmy WHERE MatchArmy.Match_id = :match_id AND MatchArmy.Army_id = Army.ArmyId"
     result = db.session.execute(sql, {"match_id": match_id})
     armies = result.fetchall()
     force1 = []
@@ -53,9 +54,9 @@ def find_match_armies(match_id):
     
     for army in armies:
         if army[1] == 1:
-            force1.append(armies_service.find_army(army[0]))
+            force1.append(army)
         else:
-            force2.append(armies_service.find_army(army[0]))
+            force2.append(army)
 
     forces = []
     forces.append(force1)
